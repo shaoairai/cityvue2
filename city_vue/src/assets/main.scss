@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  background: $gray-900;
+  color: $white;
+}
+
+.en {
+  font-family: "Rubik", "Noto Sans TC", sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+i > i[class^="path"] {
+  font-style: normal;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $gray-500 !important;
+}

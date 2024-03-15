@@ -1,0 +1,22 @@
+cameras:
+  0119:
+    ffmpeg:
+      inputs:
+      - input_args: preset-rtsp-restream
+        path: rtsp://admin:ms123456@192.168.50.129:554/ch_103
+
+      output_args:
+        record: preset-record-generic-audio-copy
+    record:
+      enabled: true
+    snapshots:
+      enabled: true
+  
+  
+mqtt:
+  host: mqtt
+
+snapshots:
+  enabled: true
+  retain:
+    default: 5
