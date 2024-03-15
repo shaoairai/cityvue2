@@ -14,44 +14,44 @@ export default {
       getRoadList: [
         {
           id: 1,
-          cameraName: "中華西路民生路口",
-          status: "無異常",
+          cameraName: "矽銀工業區",
+          status: "火焰煙霧",
           rtsp: video1,
           isClick: false,
         },
         {
           id: 2,
-          cameraName: "中山路三段自由路交叉口",
+          cameraName: "博邦科學基地",
           status: "無異常",
           rtsp: video2,
           isClick: false,
         },
         {
           id: 3,
-          cameraName: "中山路一段中華路交叉口",
+          cameraName: "尼山森林區",
           status: "無異常",
           rtsp: video3,
           isClick: false,
         },
         {
           id: 4,
-          cameraName: "中山路二段花壇街口",
+          cameraName: "中山交叉路口",
           status: "無異常",
           rtsp: video4,
           isClick: false,
         },
         {
           id: 5,
-          cameraName: "中山路二段勤益街口",
+          cameraName: "力坑快速道路",
           status: "無異常",
           rtsp: video5,
           isClick: false,
         },
         {
-          id: 171,
+          id: 172,
           cameraName: "智慧城市展",
           status: "無異常",
-          rtsp: "https://iseekwebfrigate.intemotech.com/api/camera171?fps=30&h=1080&bbox=1&motion=1&regions=1&timestamp=1",
+          rtsp: "https://iseekwebfrigate.intemotech.com/api/camera172?fps=30&h=1080&bbox=1&motion=1&regions=1&timestamp=1",
           isClick: false,
         },
       ],
@@ -72,7 +72,7 @@ export default {
 
       // Frigate 各鏡頭狀態
       frigatestats: "",
-      // Frigate 該鏡頭事件 https://iseekwebfrigate.intemotech.com/api/events?cameras=camera171
+      // Frigate 該鏡頭事件 https://iseekwebfrigate.intemotech.com/api/events?cameras=camera172
       frigateEvents: [],
       // Frigate 事件暫存
       eventsTmpFirstTmp: [],
@@ -190,7 +190,7 @@ export default {
       // vm.getRoadList.forEach((item) => {
       const filteredData = res.data.filter(
         // (obj) => obj.camera === `camera${item.id}`
-        (obj) => obj.camera === `camera171`
+        (obj) => obj.camera === `camera172`
       );
 
       // 如果沒此攝影機
@@ -219,11 +219,14 @@ export default {
         if (vm.eventsTmpFirstTmp.length != 0) {
           console.warn("火警");
           vm.getRoadList.forEach((item) => {
-            if (item.id === 171) {
+            if (item.id === 172) {
               item.status = "火焰煙霧";
             }
           });
           vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
+
+          // 要切換才能更新狀態
+          vm.switchActiveCam(vm.switchRoadId);
         } else {
           vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
         }
@@ -283,6 +286,18 @@ export default {
         item.cameraName.match(vm.searchText)
       );
     },
+    // 回到無異常狀態
+    statusToNormal() {
+      const vm = this;
+      vm.getRoadList.forEach((item) => {
+        if (item.id === 172) {
+          item.status = "無異常";
+        }
+      });
+
+      // 要切換才能更新狀態
+      vm.switchActiveCam(vm.switchRoadId);
+    },
   },
   async mounted() {
     const vm = this;
@@ -304,6 +319,8 @@ export default {
 
 <template>
   <div>
+    {{ activeCam }} || {{ activeCam.status }} ||
+    {{ switchRoadId }}
     <div class="row g-0">
       <!-- 選單列表 -->
       <div class="col-12 col-md-4">
@@ -468,27 +485,57 @@ export default {
         </div>
         <div class="row g-0" style="height: calc(100vh - 280px)">
           <!-- :class="{ 'd-none': loadingCam }" -->
-          <video autoplay loop v-if="activeCam.id == 1">
+          <video
+            autoplay
+            loop
+            v-show="activeCam.id == 1"
+            class="h-100 w-auto"
+            style="object-fit: contain"
+          >
             <source :src="video1" type="video/mp4" />
           </video>
 
-          <video autoplay loop v-if="activeCam.id == 2">
+          <video
+            autoplay
+            loop
+            v-show="activeCam.id == 2"
+            class="h-100 w-auto"
+            style="object-fit: contain"
+          >
             <source :src="video2" type="video/mp4" />
           </video>
 
-          <video autoplay loop v-if="activeCam.id == 3">
+          <video
+            autoplay
+            loop
+            v-show="activeCam.id == 3"
+            class="h-100 w-auto"
+            style="object-fit: contain"
+          >
             <source :src="video3" type="video/mp4" />
           </video>
 
-          <video autoplay loop v-if="activeCam.id == 4">
+          <video
+            autoplay
+            loop
+            v-show="activeCam.id == 4"
+            class="h-100 w-auto"
+            style="object-fit: contain"
+          >
             <source :src="video4" type="video/mp4" />
           </video>
 
-          <video autoplay loop v-if="activeCam.id == 5">
+          <video
+            autoplay
+            loop
+            v-show="activeCam.id == 5"
+            class="h-100 w-auto"
+            style="object-fit: contain"
+          >
             <source :src="video5" type="video/mp4" />
           </video>
           <img
-            v-if="activeCam.id > 5"
+            v-show="activeCam.id > 5"
             :src="activeCam.rtsp"
             alt=""
             class="h-100 w-auto"
@@ -513,16 +560,19 @@ export default {
             <div class="mx-2 w-100 d-flex">
               <div
                 class="accepted cursor-pointer w-100 text-center me-2 fs-3 d-flex align-items-center justify-content-center rounded-3"
+                @click="statusToNormal"
               >
                 回報<br />已受理
               </div>
               <div
                 class="ignore cursor-pointer w-100 text-center me-2 fs-3 d-flex align-items-center justify-content-center rounded-3"
+                @click="statusToNormal"
               >
                 忽略<br />該通報
               </div>
               <div
                 class="respond cursor-pointer w-100 text-center fs-3 d-flex align-items-center justify-content-center rounded-3"
+                @click="statusToNormal"
               >
                 回報<br />AI誤判
               </div>
