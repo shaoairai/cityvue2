@@ -223,6 +223,12 @@ export default {
               item.status = "火焰煙霧";
             }
           });
+
+          vm.roadList.forEach((item) => {
+            if (item.id === 172) {
+              item.status = "火焰煙霧";
+            }
+          });
           vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
 
           // 要切換才能更新狀態
@@ -290,6 +296,12 @@ export default {
     statusToNormal() {
       const vm = this;
       vm.getRoadList.forEach((item) => {
+        if (item.id === 172) {
+          item.status = "無異常";
+        }
+      });
+
+      vm.roadList.forEach((item) => {
         if (item.id === 172) {
           item.status = "無異常";
         }
