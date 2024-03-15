@@ -319,8 +319,6 @@ export default {
 
 <template>
   <div>
-    {{ activeCam }} || {{ activeCam.status }} ||
-    {{ switchRoadId }}
     <div class="row g-0">
       <!-- 選單列表 -->
       <div class="col-12 col-md-4">
