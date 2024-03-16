@@ -407,7 +407,6 @@ export default {
 <template>
   <div>
     <!-- 警報音效 -->
-    {{ getRoadList }}
     <div class="d-none">
       <audio ref="audioElement" autoplay muted loop>
         <source :src="alertsound" type="audio/mpeg" />
