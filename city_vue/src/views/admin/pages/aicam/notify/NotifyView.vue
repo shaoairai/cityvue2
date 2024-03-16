@@ -3,7 +3,7 @@ export default {
   data() {
     return {
       iframeUrl:
-        document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
+        document.querySelector("#METABASEWEB").getAttribute("data-url") +
         "events",
     };
   },
