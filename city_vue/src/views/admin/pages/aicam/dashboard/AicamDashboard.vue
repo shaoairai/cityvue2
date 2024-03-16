@@ -353,11 +353,13 @@ export default {
       const vm = this;
       if (status === "true") {
         console.log("播放");
-        vm.$refs.audioElement.muted = false;
+        // vm.$refs.audioElement.muted = false;
+        vm.audio.muted = false;
       } else {
         console.log("暫停");
-        vm.$refs.audioElement.muted = true;
+        // vm.$refs.audioElement.muted = true;
         vm.isPlaying = false;
+        vm.audio.muted = false;
       }
     },
     // 當下時間

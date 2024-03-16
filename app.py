@@ -116,7 +116,7 @@ def userlogin():
 def aicamReport():
     # METABASE_SITE_URL = METABASE # "https://saas_metabase.intemotech.com"
 
-    METABASE_SITE_URL = "https://saas_metabase.intemotech.com"
+    METABASE_SITE_URL = METABASE
     METABASE_SECRET_KEY = "c6020f2bcef7b9aae1709db5bdd8092f0829dbe766fb471a5b0d015d224cad16"
 
     payload = {

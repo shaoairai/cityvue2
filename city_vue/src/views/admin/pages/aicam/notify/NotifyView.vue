@@ -1,7 +1,11 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      iframeUrl:
+        document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
+        "events",
+    };
   },
 };
 </script>
@@ -9,7 +13,7 @@ export default {
 <template>
   <div>
     <iframe
-      src="https://iseekwebfrigate.intemotech.com/events"
+      :src="iframeUrl"
       frameborder="0"
       class="w-100"
       style="height: calc(100vh - 128px)"
