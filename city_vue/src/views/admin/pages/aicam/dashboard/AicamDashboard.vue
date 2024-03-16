@@ -1,10 +1,11 @@
 <script>
 import axios from "axios";
-import video1 from "@/assets/video/1.Factory.mp4";
-import video2 from "@/assets/video/2.Building.mp4";
-import video3 from "@/assets/video/3.Forest.mp4";
-import video4 from "@/assets/video/4.Fallover.mp4";
-import video5 from "@/assets/video/5.Flood.mp4";
+import video1 from "@/assets/video/1.mp4";
+import video2 from "@/assets/video/2.mp4";
+import video3 from "@/assets/video/3.mp4";
+import video4 from "@/assets/video/4.mp4";
+import video5 from "@/assets/video/5.mp4";
+import alertsound from "@/assets/sound/alertsound.mp3";
 
 export default {
   data() {
@@ -77,14 +78,17 @@ export default {
       // Frigate 事件暫存
       eventsTmpFirstTmp: [],
       eventsTmpFirstNew: [],
-      // 現在有狀況的鏡頭
-      // nowDisaster: [],
+      // 當下時間
+      currentTime: "",
+      // 是否正在播放音效
+      isPlaying: false,
 
       video1: video1,
       video2: video2,
       video3: video3,
       video4: video4,
       video5: video5,
+      alertsound: alertsound,
     };
   },
   watch: {
@@ -100,7 +104,7 @@ export default {
   methods: {
     // 取得資料
     async getRoadData() {
-      console.log("getRoadData重取資料");
+      // console.log("getRoadData重取資料");
       const vm = this;
       vm.roadList = JSON.parse(JSON.stringify(vm.getRoadList));
 
@@ -123,7 +127,7 @@ export default {
     },
     // 切換鏡頭
     switchActiveCam(roadId) {
-      console.log("switchActiveCam");
+      // console.log("switchActiveCam");
       const vm = this;
       // 呈現 loading 狀態
       // vm.loadingCam = true;
@@ -175,7 +179,7 @@ export default {
 
       await axios(config)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
 
           // 取得各鏡頭Events
           vm.frigateEachEvents(res);
@@ -200,8 +204,8 @@ export default {
           return b.end_time - a.end_time;
         });
 
-        console.log(filteredData[0].camera);
-        console.log(filteredData[0].end_time);
+        // console.log(filteredData[0].camera);
+        // console.log(filteredData[0].end_time);
 
         vm.eventsTmpFirstNew = {
           cam: filteredData[0].camera,
@@ -213,7 +217,7 @@ export default {
     },
     // 比對
     compareData() {
-      console.log("有跑比對");
+      // console.log("有跑比對");
       const vm = this;
       if (vm.eventsTmpFirstTmp.tmptime !== vm.eventsTmpFirstNew.tmptime) {
         if (vm.eventsTmpFirstTmp.length != 0) {
@@ -227,6 +231,11 @@ export default {
           vm.roadList.forEach((item) => {
             if (item.id === 172) {
               item.status = "火焰煙霧";
+              if (!vm.isPlaying) {
+                // 警示音效
+                vm.audioPlay("true");
+                vm.isPlaying = true;
+              }
             }
           });
           vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
@@ -251,17 +260,17 @@ export default {
     },
     // 當前鏡頭是否有畫面
     isCamAlive() {
-      console.log("isCamAlive");
+      // console.log("isCamAlive");
       const vm = this;
       // 尚未顯示再判斷
       if (vm.frigatestats[`camera${vm.switchRoadId}`]) {
         if (vm.frigatestats[`camera${vm.switchRoadId}`]?.camera_fps === 0) {
           // 尚未出現畫面
-          console.log("尚未出現畫面");
+          // console.log("尚未出現畫面");
           vm.loadingCam = true;
         } else {
           // 顯示畫面
-          console.log("顯示畫面");
+          // console.log("顯示畫面");
           vm.loadingCam = false;
         }
       } else {
@@ -270,7 +279,7 @@ export default {
     },
     // 依項目篩選
     filterByItem() {
-      console.log("filterByItem");
+      // console.log("filterByItem");
       const vm = this;
       if (vm.filterProject === "fire") {
         vm.filterList = vm.roadList.filter(
@@ -295,6 +304,7 @@ export default {
     // 回到無異常狀態
     statusToNormal() {
       const vm = this;
+      vm.audioPlay("false");
       vm.getRoadList.forEach((item) => {
         if (item.id === 172) {
           item.status = "無異常";
@@ -310,27 +320,75 @@ export default {
       // 要切換才能更新狀態
       vm.switchActiveCam(vm.switchRoadId);
     },
+    // 音效
+    initAudio() {
+      const vm = this;
+      if (vm.$refs.audioElement.paused) {
+        vm.$refs.audioElement.play();
+        vm.$refs.audioElement.loop = true;
+      }
+    },
+    audioPlay(status) {
+      const vm = this;
+      if (status === "true") {
+        console.log("播放");
+        vm.$refs.audioElement.muted = false;
+      } else {
+        console.log("暫停");
+        vm.$refs.audioElement.muted = true;
+        vm.isPlaying = false;
+      }
+    },
+    // 當下時間
+    updateClock() {
+      const vm = this;
+      const now = new Date();
+      vm.currentTime = `${now.getFullYear()}-${(
+        "0" +
+        (now.getMonth() + 1)
+      ).slice(-2)}-${("0" + now.getDate()).slice(-2)} ${(
+        "0" + now.getHours()
+      ).slice(-2)}:${("0" + now.getMinutes()).slice(-2)}:${(
+        "0" + now.getSeconds()
+      ).slice(-2)}`;
+    },
   },
   async mounted() {
     const vm = this;
+
+    // 時間
+    vm.updateClock(); // 初始化
+    setInterval(vm.updateClock, 1000); // 每秒更新
+
     await vm.getRoadData();
     await vm.getFrigateStats();
     await vm.getFrigateEvents();
+    vm.initAudio();
 
-    window.getRoadListInterval = setInterval(vm.getRoadData, 5000);
-    window.getFrigateStatsInterval = setInterval(vm.getFrigateStats, 5000);
-    window.getFrigateEventsInterval = setInterval(vm.getFrigateEvents, 5000);
+    window.getRoadListInterval = setInterval(vm.getRoadData, 1000);
+    window.getFrigateStatsInterval = setInterval(vm.getFrigateStats, 1000);
+    window.getFrigateEventsInterval = setInterval(vm.getFrigateEvents, 1000);
+    window.initAudioInterval = setInterval(vm.initAudio, 1000);
   },
   unmounted() {
-    console.log("unmounted！");
+    // console.log("unmounted！");
     clearInterval(window.getRoadListInterval);
     clearInterval(window.getFrigateStatsInterval);
+    clearInterval(window.getFrigateEventsInterval);
+    clearInterval(window.initAudioInterval);
   },
 };
 </script>
 
 <template>
   <div>
+    <!-- 警報音效 -->
+    <div class="">
+      <audio ref="audioElement" autoplay muted loop>
+        <source :src="alertsound" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
     <div class="row g-0">
       <!-- 選單列表 -->
       <div class="col-12 col-md-4">
@@ -431,6 +489,7 @@ export default {
             <table class="w-100 camListTable">
               <thead>
                 <tr>
+                  <th class="p-2 text-center"></th>
                   <th class="p-2 text-center">序號</th>
                   <th class="p-2 text-center">攝影機名稱</th>
                   <th class="p-2 text-center">辨識狀態</th>
@@ -438,33 +497,56 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <template v-for="(road, i) in filterList" :key="i">
-                  <tr
-                    class="cursor-pointer"
-                    :class="[
-                      road.status === '無異常' && road.isClick
-                        ? 'normalClick'
-                        : road.status === '無異常' && !road.isClick
-                        ? 'normalUnclick'
-                        : road.status !== '無異常' && road.isClick
-                        ? 'abnormalClick'
-                        : 'abnormalUnclick',
-                    ]"
-                    style="user-select: none"
-                    @click="switchActiveCam(road.id)"
-                  >
-                    <td class="px-2 py-4 text-center">{{ i + 1 }}</td>
-                    <td class="px-2 py-4">{{ road.cameraName }}</td>
-                    <td class="px-2 py-4">{{ road.status }}</td>
-                    <td class="px-2 py-4">
-                      <img
-                        src="@/assets/img/triangle.svg"
-                        :class="{ invisible: !road.isClick }"
-                      />
-                      <!-- <div
+                <template v-if="filterList.length !== 0">
+                  <template v-for="(road, i) in filterList" :key="i">
+                    <tr
+                      class="cursor-pointer"
+                      :class="[
+                        road.status === '無異常' && road.isClick
+                          ? 'normalClick fw-bold'
+                          : road.status === '無異常' && !road.isClick
+                          ? 'normalUnclick'
+                          : road.status !== '無異常' && road.isClick
+                          ? 'abnormalClick fw-bold'
+                          : 'abnormalUnclick',
+                      ]"
+                      style="user-select: none"
+                      @click="switchActiveCam(road.id)"
+                    >
+                      <td
+                        class="text-center"
+                        style="padding: 0.75rem 0.5rem"
+                      ></td>
+                      <td class="text-center" style="padding: 0.75rem 0.5rem">
+                        {{ i + 1 }}
+                      </td>
+                      <td style="padding: 0.75rem 0.5rem">
+                        {{ road.cameraName }}
+                      </td>
+                      <td style="width: 80px; padding: 0.75rem 0.5rem">
+                        {{ road.status }}
+                      </td>
+                      <td class="text-center" style="padding: 0.75rem 0.5rem">
+                        <img
+                          src="@/assets/img/triangle.svg"
+                          class="mb-1"
+                          :class="{ invisible: !road.isClick }"
+                        />
+                        <!-- <div
                         :class="[road.isClick ? 'activeIcon bg-warning' : '']"
                         style="width: 12px; height: 12px"
                       ></div> -->
+                      </td>
+                    </tr>
+                  </template>
+                </template>
+
+                <template v-else>
+                  <tr>
+                    <td colspan="5" class="text-center pt-5">
+                      沒有符合的資料，<span style="white-space: nowrap"
+                        >請試試其它篩選項目或其他關鍵字！</span
+                      >
                     </td>
                   </tr>
                 </template>
@@ -497,6 +579,7 @@ export default {
           <!-- :class="{ 'd-none': loadingCam }" -->
           <video
             autoplay
+            muted
             loop
             v-show="activeCam.id == 1"
             class="h-100 w-auto"
@@ -507,6 +590,7 @@ export default {
 
           <video
             autoplay
+            muted
             loop
             v-show="activeCam.id == 2"
             class="h-100 w-auto"
@@ -517,6 +601,7 @@ export default {
 
           <video
             autoplay
+            muted
             loop
             v-show="activeCam.id == 3"
             class="h-100 w-auto"
@@ -527,6 +612,7 @@ export default {
 
           <video
             autoplay
+            muted
             loop
             v-show="activeCam.id == 4"
             class="h-100 w-auto"
@@ -537,6 +623,7 @@ export default {
 
           <video
             autoplay
+            muted
             loop
             v-show="activeCam.id == 5"
             class="h-100 w-auto"
@@ -634,7 +721,9 @@ export default {
                 <i class="icon-cctv-info fs-2" style="margin-left: -6px"></i>
               </div>
               <div class="aiNotifyContent py-2 px-3">
-                <div>影像時間：<span>2023-12-29 15:03:56</span></div>
+                <div>
+                  影像時間：<span id="nowTime">{{ currentTime }}</span>
+                </div>
                 <div>
                   影像來源：<span>{{ activeCam.cameraName }}</span>
                 </div>

@@ -60,7 +60,7 @@ export default {
             border: unset;
             background-color: unset;
             color: white;
-            margin-left: 16px;
+            margin-left: 12px;
           "
         >
           <option value="aicam" style="color: #222222">
