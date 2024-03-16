@@ -53,9 +53,11 @@ export default {
           ),
           cameraName: "智慧城市展",
           status: "無異常",
-          rtsp: `https://iseekwebfrigate.intemotech.com/api/camera${Number(
-            document.querySelector("#DEMOID").getAttribute("data-url")
-          )}?fps=30&h=1080&bbox=1&motion=1&regions=1`,
+          rtsp:
+            document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
+            `api/camera${Number(
+              document.querySelector("#DEMOID").getAttribute("data-url")
+            )}?fps=30&h=1080&bbox=1&motion=1&regions=1`,
           isClick: false,
         },
       ],
@@ -405,6 +407,7 @@ export default {
 <template>
   <div>
     <!-- 警報音效 -->
+    {{ getRoadList }}
     <div class="d-none">
       <audio ref="audioElement" autoplay muted loop>
         <source :src="alertsound" type="audio/mpeg" />

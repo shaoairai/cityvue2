@@ -224,7 +224,7 @@ def aicamReport():
 @app.route('/frigatestats')
 def frigatestats():
     try:
-        response = requests.get('https://iseekwebfrigate.intemotech.com/api/stats')
+        response = requests.get(FRIGATEIPWEB+"api/stats")
         return jsonify(response.json()), response.status_code
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -233,7 +233,7 @@ def frigatestats():
 def frigateevents():
     # camid = request.args.get('camid')
     try:
-        response = requests.get('https://iseekwebfrigate.intemotech.com/api/events')
+        response = requests.get(FRIGATEIPWEB+"api/events")
         # response = requests.get('https://iseekwebfrigate.intemotech.com/api/events?cameras=camera'+camid)
         return jsonify(response.json()), response.status_code
     except Exception as e:
