@@ -10,7 +10,6 @@ import alertsound from "@/assets/sound/alertsound.mp3";
 export default {
   data() {
     return {
-      getRoadListInterval: "",
       // 取得原始資料
       getRoadList: [
         {
@@ -49,10 +48,14 @@ export default {
           isClick: false,
         },
         {
-          id: 172,
+          id: Number(
+            document.querySelector("#DEMOID").getAttribute("data-url")
+          ),
           cameraName: "智慧城市展",
           status: "無異常",
-          rtsp: "https://iseekwebfrigate.intemotech.com/api/camera172?fps=30&h=1080&bbox=1&motion=1&regions=1&timestamp=1",
+          rtsp: `https://iseekwebfrigate.intemotech.com/api/camera${Number(
+            document.querySelector("#DEMOID").getAttribute("data-url")
+          )}?fps=30&h=1080&bbox=1&motion=1&regions=1`,
           isClick: false,
         },
       ],
@@ -73,7 +76,7 @@ export default {
 
       // Frigate 各鏡頭狀態
       frigatestats: "",
-      // Frigate 該鏡頭事件 https://iseekwebfrigate.intemotech.com/api/events?cameras=camera172
+      // Frigate 該鏡頭事件 https://iseekwebfrigate.intemotech.com/api/events?cameras=cameraxxx
       frigateEvents: [],
       // Frigate 事件暫存
       eventsTmpFirstTmp: [],
@@ -194,7 +197,11 @@ export default {
       // vm.getRoadList.forEach((item) => {
       const filteredData = res.data.filter(
         // (obj) => obj.camera === `camera${item.id}`
-        (obj) => obj.camera === `camera172`
+        (obj) =>
+          obj.camera ===
+          `camera${Number(
+            document.querySelector("#DEMOID").getAttribute("data-url")
+          )}`
       );
 
       // 如果沒此攝影機
@@ -223,13 +230,19 @@ export default {
         if (vm.eventsTmpFirstTmp.length != 0) {
           console.warn("火警");
           vm.getRoadList.forEach((item) => {
-            if (item.id === 172) {
+            if (
+              item.id ===
+              Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+            ) {
               item.status = "火焰煙霧";
             }
           });
 
           vm.roadList.forEach((item) => {
-            if (item.id === 172) {
+            if (
+              item.id ===
+              Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+            ) {
               item.status = "火焰煙霧";
               if (!vm.isPlaying) {
                 // 警示音效
@@ -306,13 +319,19 @@ export default {
       const vm = this;
       vm.audioPlay("false");
       vm.getRoadList.forEach((item) => {
-        if (item.id === 172) {
+        if (
+          item.id ===
+          Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+        ) {
           item.status = "無異常";
         }
       });
 
       vm.roadList.forEach((item) => {
-        if (item.id === 172) {
+        if (
+          item.id ===
+          Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+        ) {
           item.status = "無異常";
         }
       });
@@ -356,6 +375,9 @@ export default {
   async mounted() {
     const vm = this;
 
+    console.log(
+      Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+    );
     // 時間
     vm.updateClock(); // 初始化
     setInterval(vm.updateClock, 1000); // 每秒更新
@@ -383,7 +405,7 @@ export default {
 <template>
   <div>
     <!-- 警報音效 -->
-    <div class="">
+    <div class="d-none">
       <audio ref="audioElement" autoplay muted loop>
         <source :src="alertsound" type="audio/mpeg" />
         Your browser does not support the audio element.
