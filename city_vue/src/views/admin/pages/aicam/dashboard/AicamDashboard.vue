@@ -214,15 +214,15 @@ export default {
       console.warn(filteredData);
       if (filteredData.length !== 0) {
         filteredData.sort((a, b) => {
-          return b.end_time - a.end_time;
+          return b.start_time - a.start_time;
         });
 
         // console.log(filteredData[0].camera);
-        // console.log(filteredData[0].end_time);
+        // console.log(filteredData[0].start_time);
 
         vm.eventsTmpFirstNew = {
           cam: filteredData[0].camera,
-          tmptime: filteredData[0].end_time,
+          tmptime: filteredData[0].start_time,
         };
         vm.compareData();
       }
