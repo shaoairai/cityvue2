@@ -76,8 +76,8 @@ export default {
     // 解除帳號鎖定
     async resetLock(email) {
       const apiserver = document
-        .querySelector("#apiserver")
-        .getAttribute("data-api");
+        .querySelector("#APISERVERWEB")
+        .getAttribute("data-url");
 
       const data = new FormData();
       data.append("account", email);

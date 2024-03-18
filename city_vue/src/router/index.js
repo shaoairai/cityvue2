@@ -7,6 +7,8 @@ import AicamDashboard from "../views/admin/pages/aicam/dashboard/AicamDashboard.
 import AicamReport from "../views/admin/pages/aicam/report/AicamReport.vue";
 import AicamCctv from "../views/admin/pages/aicam/cctv/AicamCctv.vue";
 import AicamNotify from "../views/admin/pages/aicam/notify/NotifyView.vue";
+import CamList from "../views/admin/pages/aicam/cctv/camlist/CamList.vue";
+import CreatecamView from "../views/admin/pages/aicam/cctv/camlist/CreatecamView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -47,7 +49,38 @@ const router = createRouter({
               path: "cctv",
               name: "aicamCctv",
               component: AicamCctv,
+              redirect: "/admin/aicam/cctv/setting",
+              children: [
+                {
+                  path: "setting",
+                  name: "setting",
+                  component: CamList,
+                },
+                {
+                  path: "create",
+                  name: "create",
+                  component: CreatecamView,
+                },
+              ],
             },
+            // {
+            //   path: "camera",
+            //   name: "camera",
+            //   component: CamlistView,
+            //   redirect: "/admin/camera/setting",
+            //   children: [
+            //     {
+            //       path: "setting",
+            //       name: "setting",
+            //       component: CamList,
+            //     },
+            //     {
+            //       path: "create",
+            //       name: "create",
+            //       component: CreatecamView,
+            //     },
+            //   ],
+            // },
             {
               path: "notify",
               name: "aicamNotify",

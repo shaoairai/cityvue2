@@ -65,7 +65,7 @@ export default {
                 AI 統計報表
               </li>
             </RouterLink>
-            <!-- <RouterLink to="/admin/aicam/cctv" class="tabs">
+            <RouterLink to="/admin/aicam/cctv" class="tabs">
               <li
                 class="nav-item position-relative me-3 cursor-pointer"
                 :class="{ active: navActive === 'cctv' }"
@@ -74,7 +74,7 @@ export default {
               >
                 攝影機設定
               </li>
-            </RouterLink> -->
+            </RouterLink>
             <RouterLink to="/admin/aicam/notify" class="tabs">
               <li
                 class="nav-item position-relative me-3 cursor-pointer"

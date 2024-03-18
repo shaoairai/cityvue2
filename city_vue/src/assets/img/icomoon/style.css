@@ -1,19 +1,18 @@
 @font-face {
-  font-family: "icomoon";
-  src: url("fonts/icomoon.eot?v3y10c");
-  src: url("fonts/icomoon.eot?v3y10c#iefix") format("embedded-opentype"),
-    url("fonts/icomoon.ttf?v3y10c") format("truetype"),
-    url("fonts/icomoon.woff?v3y10c") format("woff"),
-    url("fonts/icomoon.svg?v3y10c#icomoon") format("svg");
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?ldp9ih');
+  src:  url('fonts/icomoon.eot?ldp9ih#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ldp9ih') format('truetype'),
+    url('fonts/icomoon.woff?ldp9ih') format('woff'),
+    url('fonts/icomoon.svg?ldp9ih#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "icomoon" !important;
+  font-family: 'icomoon' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -26,6 +25,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-area-square .path1:before {
+  content: "\e97a";
+  color: rgb(66, 147, 240);
+}
+.icon-area-square .path2:before {
+  content: "\e97b";
+  margin-left: -1.25em;
+  color: rgb(255, 255, 255);
+}
 .icon-rtsp-inro .path1:before {
   content: "\e953";
   color: rgb(247, 181, 44);

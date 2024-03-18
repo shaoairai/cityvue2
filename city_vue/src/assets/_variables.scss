@@ -302,6 +302,7 @@ $primary: $blue !default;
 $secondary: $gray-900 !default;
 $success: $green !default;
 $info: $cyan !default;
+$alert: $pink !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
@@ -314,6 +315,7 @@ $theme-colors: (
   "secondary": $secondary,
   "success": $success,
   "info": $info,
+  "alert": $alert,
   "warning": $warning,
   "danger": $danger,
   "light": $light,

@@ -3,8 +3,8 @@ import axios from "axios";
 // 驗證
 export async function verifyToken() {
   const apiserver = document
-    .querySelector("#apiserver")
-    .getAttribute("data-api");
+    .querySelector("#APISERVERWEB")
+    .getAttribute("data-url");
 
   // console.log("1. 準備驗證token，進入verifyToken");
 
@@ -82,8 +82,8 @@ export async function getToken() {
 // refreshToken
 export async function refreshToken(rtnRefresh) {
   const apiserver = document
-    .querySelector("#apiserver")
-    .getAttribute("data-api");
+    .querySelector("#APISERVERWEB")
+    .getAttribute("data-url");
 
   // console.log("5. 進入refreshToken");
   const config = {

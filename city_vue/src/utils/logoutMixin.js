@@ -11,7 +11,7 @@ export default {
       // 移除所有 setInterval
       this.stopAllIntervals();
 
-      this.$router.push("/login");
+      // this.$router.push("/login");
     },
     stopAllIntervals() {
       // 停止所有的 setInterval
