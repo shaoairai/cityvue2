@@ -194,9 +194,12 @@ export default {
 
           // 是否有值
           // 警示音效
+          // vm.frigateEachEvents(res);
+
           if (res.data.length != 0) {
-            vm.audioPlay("true");
+            vm.eventsTmpFirstTmp = res.data.length;
           }
+          vm.compareData();
         })
         .catch((err) => {
           console.log(err.response);
@@ -240,43 +243,43 @@ export default {
     compareData() {
       console.log("有跑compareData");
       const vm = this;
-      if (vm.eventsTmpFirstTmp.tmptime !== vm.eventsTmpFirstNew.tmptime) {
-        if (vm.eventsTmpFirstTmp.length != 0) {
-          console.warn("火警");
-          vm.getRoadList.forEach((item) => {
-            if (
-              item.id ===
-              Number(document.querySelector("#DEMOID").getAttribute("data-url"))
-            ) {
-              item.status = "火焰煙霧";
+      // if (vm.eventsTmpFirstTmp.tmptime !== vm.eventsTmpFirstNew.tmptime) {
+      if (vm.eventsTmpFirstTmp.length != 0) {
+        console.warn("火警");
+        vm.getRoadList.forEach((item) => {
+          if (
+            item.id ===
+            Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+          ) {
+            item.status = "火焰煙霧";
+          }
+        });
+
+        console.log("vm.getRoadList.forEach完成");
+
+        vm.roadList.forEach((item) => {
+          if (
+            item.id ===
+            Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+          ) {
+            item.status = "火焰煙霧";
+            if (!vm.isPlaying) {
+              // 警示音效
+              vm.audioPlay("true");
+              vm.isPlaying = true;
             }
-          });
+          }
+        });
 
-          console.log("vm.getRoadList.forEach完成");
+        console.log("vm.roadList.forEach完成");
+        vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
 
-          vm.roadList.forEach((item) => {
-            if (
-              item.id ===
-              Number(document.querySelector("#DEMOID").getAttribute("data-url"))
-            ) {
-              item.status = "火焰煙霧";
-              if (!vm.isPlaying) {
-                // 警示音效
-                vm.audioPlay("true");
-                vm.isPlaying = true;
-              }
-            }
-          });
-
-          console.log("vm.roadList.forEach完成");
-          vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
-
-          // 要切換才能更新狀態
-          vm.switchActiveCam(vm.switchRoadId);
-        } else {
-          vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
-        }
+        // 要切換才能更新狀態
+        vm.switchActiveCam(vm.switchRoadId);
+      } else {
+        vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
       }
+      // }
       // const vm = this;
       // const result = [];
       // vm.eventsTmpFirstNew.forEach((currentItem) => {
