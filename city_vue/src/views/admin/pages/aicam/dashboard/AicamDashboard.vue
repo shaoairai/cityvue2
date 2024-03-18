@@ -190,7 +190,13 @@ export default {
           console.log(res.data);
 
           // 取得各鏡頭Events
-          vm.frigateEachEvents(res);
+          // vm.frigateEachEvents(res);
+
+          // 是否有值
+          // 警示音效
+          if (res.data.length != 0) {
+            vm.audioPlay("true");
+          }
         })
         .catch((err) => {
           console.log(err.response);

@@ -233,7 +233,7 @@ def frigatestats():
 def frigateevents():
     # camid = request.args.get('camid')
     try:
-        response = requests.get(FRIGATEIP+"api/events")
+        response = requests.get(FRIGATEIP+"api/events?in_progress=1")
         # response = requests.get('https://iseekwebfrigate.intemotech.com/api/events?cameras=camera'+camid)
         return jsonify(response.json()), response.status_code
     except Exception as e:
