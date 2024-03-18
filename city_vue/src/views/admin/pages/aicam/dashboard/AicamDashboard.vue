@@ -57,7 +57,7 @@ export default {
             document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
             `api/camera${Number(
               document.querySelector("#DEMOID").getAttribute("data-url")
-            )}?fps=30&h=1080&bbox=1&motion=1&regions=1`,
+            )}?fps=30&h=1080&bbox=1`,
           isClick: false,
         },
       ],
@@ -132,7 +132,7 @@ export default {
     },
     // 切換鏡頭
     switchActiveCam(roadId) {
-      // console.log("switchActiveCam");
+      console.log("切換鏡頭switchActiveCam");
       const vm = this;
       // 呈現 loading 狀態
       // vm.loadingCam = true;
@@ -165,10 +165,12 @@ export default {
       };
       await axios(config)
         .then((res) => {
+          console.log("./frigatestats res");
           vm.frigatestats = res.data.cameras;
           vm.isCamAlive();
         })
         .catch((err) => {
+          console.log("./frigatestats err");
           console.log(err.response);
           vm.isCamAlive();
         });
@@ -184,7 +186,8 @@ export default {
 
       await axios(config)
         .then((res) => {
-          // console.log(res.data);
+          console.log(`./frigateevents`);
+          console.log(res.data);
 
           // 取得各鏡頭Events
           vm.frigateEachEvents(res);
@@ -195,6 +198,7 @@ export default {
     },
     // 取得各鏡頭Events
     frigateEachEvents(res) {
+      console.log("進入frigateEachEvents");
       const vm = this;
       // vm.getRoadList.forEach((item) => {
       const filteredData = res.data.filter(
@@ -223,10 +227,12 @@ export default {
         vm.compareData();
       }
       // });
+
+      console.log("結束frigateEachEvents");
     },
     // 比對
     compareData() {
-      // console.log("有跑比對");
+      console.log("有跑compareData");
       const vm = this;
       if (vm.eventsTmpFirstTmp.tmptime !== vm.eventsTmpFirstNew.tmptime) {
         if (vm.eventsTmpFirstTmp.length != 0) {
@@ -239,6 +245,8 @@ export default {
               item.status = "火焰煙霧";
             }
           });
+
+          console.log("vm.getRoadList.forEach完成");
 
           vm.roadList.forEach((item) => {
             if (
@@ -253,6 +261,8 @@ export default {
               }
             }
           });
+
+          console.log("vm.roadList.forEach完成");
           vm.eventsTmpFirstTmp = { ...vm.eventsTmpFirstNew };
 
           // 要切換才能更新狀態
@@ -353,13 +363,13 @@ export default {
       const vm = this;
       if (status === "true") {
         console.log("播放");
-        // vm.$refs.audioElement.muted = false;
-        vm.audio.muted = false;
+        vm.$refs.audioElement.muted = false;
+        // vm.audio.muted = false;
       } else {
         console.log("暫停");
-        // vm.$refs.audioElement.muted = true;
+        vm.$refs.audioElement.muted = true;
         vm.isPlaying = false;
-        vm.audio.muted = false;
+        // vm.audio.muted = false;
       }
     },
     // 當下時間
@@ -417,7 +427,7 @@ export default {
     </div>
     <div class="row g-0">
       <!-- 選單列表 -->
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-3">
         <!-- 搜尋 -->
         <div class="position-relative">
           <i
@@ -583,7 +593,7 @@ export default {
       </div>
 
       <!-- 畫面 -->
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-9">
         <div class="d-none">
           <video>
             <source :src="video1" type="video/mp4" />
