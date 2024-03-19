@@ -261,18 +261,19 @@ export default {
             });
 
             console.log("vm.roadList.forEach完成");
-          } else {
-            vm.roadList.forEach((item) => {
-              if (
-                item.id ===
-                Number(
-                  document.querySelector("#DEMOID").getAttribute("data-url")
-                )
-              ) {
-                item.status = "無異常";
-              }
-            });
           }
+          // else {
+          //   vm.roadList.forEach((item) => {
+          //     if (
+          //       item.id ===
+          //       Number(
+          //         document.querySelector("#DEMOID").getAttribute("data-url")
+          //       )
+          //     ) {
+          //       item.status = "無異常";
+          //     }
+          //   });
+          // }
           // vm.compareData();
         })
         .catch((err) => {
@@ -486,7 +487,7 @@ export default {
 
     window.getRoadListInterval = setInterval(vm.getRoadData, 1000);
     // window.getFrigateStatsInterval = setInterval(vm.getFrigateStats, 1000);
-    window.getFrigateEventsInterval = setInterval(vm.getFrigateEvents, 1000);
+    window.getFrigateEventsInterval = setInterval(vm.getFrigateEvents, 250);
     window.initAudioInterval = setInterval(vm.initAudio, 1000);
   },
   unmounted() {
