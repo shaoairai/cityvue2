@@ -137,9 +137,6 @@ export default {
       // 是否正在播放音效
       isPlaying: false,
 
-      // 是否警報
-      alerting: false,
-
       video1: video1,
       video2: video2,
       video3: video3,
@@ -250,8 +247,6 @@ export default {
           // vm.frigateEachEvents(res);
 
           if (res.data.length != 0) {
-            vm.alerting = true;
-
             vm.roadList.forEach((item) => {
               if (
                 item.id ===
@@ -260,6 +255,8 @@ export default {
                 )
               ) {
                 item.status = "火焰煙霧";
+                // 警示音效
+                vm.audioPlay("true");
               }
             });
 
@@ -273,6 +270,8 @@ export default {
                 )
               ) {
                 item.status = "無異常";
+                // 警示音效
+                vm.audioPlay("false");
               }
             });
           }
@@ -282,40 +281,40 @@ export default {
           console.log(err.response);
         });
     },
-    // 取得各鏡頭Events
-    frigateEachEvents(res) {
-      console.log("進入frigateEachEvents");
-      const vm = this;
-      // vm.getRoadList.forEach((item) => {
-      const filteredData = res.data.filter(
-        // (obj) => obj.camera === `camera${item.id}`
-        (obj) =>
-          obj.camera ===
-          `camera${Number(
-            document.querySelector("#DEMOID").getAttribute("data-url")
-          )}`
-      );
+    // // 取得各鏡頭Events
+    // frigateEachEvents(res) {
+    //   console.log("進入frigateEachEvents");
+    //   const vm = this;
+    //   // vm.getRoadList.forEach((item) => {
+    //   const filteredData = res.data.filter(
+    //     // (obj) => obj.camera === `camera${item.id}`
+    //     (obj) =>
+    //       obj.camera ===
+    //       `camera${Number(
+    //         document.querySelector("#DEMOID").getAttribute("data-url")
+    //       )}`
+    //   );
 
-      // 如果沒此攝影機
-      console.warn(filteredData);
-      if (filteredData.length !== 0) {
-        filteredData.sort((a, b) => {
-          return b.start_time - a.start_time;
-        });
+    //   // 如果沒此攝影機
+    //   console.warn(filteredData);
+    //   if (filteredData.length !== 0) {
+    //     filteredData.sort((a, b) => {
+    //       return b.start_time - a.start_time;
+    //     });
 
-        // console.log(filteredData[0].camera);
-        // console.log(filteredData[0].start_time);
+    //     // console.log(filteredData[0].camera);
+    //     // console.log(filteredData[0].start_time);
 
-        vm.eventsTmpFirstNew = {
-          cam: filteredData[0].camera,
-          tmptime: filteredData[0].start_time,
-        };
-        vm.compareData();
-      }
-      // });
+    //     vm.eventsTmpFirstNew = {
+    //       cam: filteredData[0].camera,
+    //       tmptime: filteredData[0].start_time,
+    //     };
+    //     vm.compareData();
+    //   }
+    //   // });
 
-      console.log("結束frigateEachEvents");
-    },
+    //   console.log("結束frigateEachEvents");
+    // },
     // 比對
     compareData() {
       console.log("有跑compareData");
@@ -483,19 +482,19 @@ export default {
     setInterval(vm.updateClock, 1000); // 每秒更新
 
     await vm.getRoadData();
-    await vm.getFrigateStats();
+    // await vm.getFrigateStats();
     await vm.getFrigateEvents();
     vm.initAudio();
 
     window.getRoadListInterval = setInterval(vm.getRoadData, 1000);
-    window.getFrigateStatsInterval = setInterval(vm.getFrigateStats, 1000);
+    // window.getFrigateStatsInterval = setInterval(vm.getFrigateStats, 1000);
     window.getFrigateEventsInterval = setInterval(vm.getFrigateEvents, 1000);
     window.initAudioInterval = setInterval(vm.initAudio, 1000);
   },
   unmounted() {
     // console.log("unmounted！");
     clearInterval(window.getRoadListInterval);
-    clearInterval(window.getFrigateStatsInterval);
+    // clearInterval(window.getFrigateStatsInterval);
     clearInterval(window.getFrigateEventsInterval);
     clearInterval(window.initAudioInterval);
   },
