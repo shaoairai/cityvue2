@@ -170,7 +170,9 @@ export default {
                   </i>
                 </RouterLink>
 
-                <i class="icon-area-square fs-3 text-primary cursor-pointer">
+                <i
+                  class="icon-area-square fs-3 text-primary cursor-pointer me-1"
+                >
                   <i class="path1"></i>
                   <i class="path2"></i>
                 </i>

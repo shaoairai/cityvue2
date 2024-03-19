@@ -9,6 +9,7 @@ export default {
       dangerNumber: this.edit_crowdedset_warn_minutes
         ? this.edit_crowdedset_warn_minutes
         : "",
+      keepSeconds: "",
     };
   },
 };
@@ -39,25 +40,6 @@ export default {
     />秒鐘，即發出通報。
 
     <ErrorMessage name="alertNumber">
-      <div class="text-danger ps-2">必填</div>
-    </ErrorMessage>
-  </div>
-  <div class="d-flex flex-row align-items-center pb-3">
-    <div>攝影機辨識區域偵測服務水平呈現留意狀態持續</div>
-    <VField
-      type="number"
-      name="dangerNumber"
-      class="form-control mx-1"
-      style="width: 160px"
-      rules="required"
-      placeholder="請輸入數字"
-      v-model="dangerNumber"
-    />
-    <div class="pe-1">分鐘以上，判斷為擁擠，顯示</div>
-    <div class="bg-danger text-white px-3 py-1 rounded-1 user-select-none">
-      擁擠
-    </div>
-    <ErrorMessage name="dangerNumber">
       <div class="text-danger ps-2">必填</div>
     </ErrorMessage>
   </div>

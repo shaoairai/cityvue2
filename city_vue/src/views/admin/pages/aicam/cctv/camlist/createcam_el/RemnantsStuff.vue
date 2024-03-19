@@ -78,7 +78,7 @@ export default {
 
 <template>
   <div class="d-flex flex-row align-items-center pb-3">
-    <div>攝影機辨識區域偵測物品閒置</div>
+    <div>攝影機辨識區域偵測民眾路倒持續</div>
 
     <VField
       type="number"
@@ -89,13 +89,13 @@ export default {
       placeholder="請輸入數字"
       v-model="remnantsNumber"
     />
-    <div class="pe-1">分鐘以上，判斷為遺留物。</div>
+    <div class="pe-1">秒鐘以上，即需發出即時通報。</div>
     <ErrorMessage name="remnantsNumber">
       <div class="text-danger ps-2">必填</div>
     </ErrorMessage>
   </div>
 
-  <div class="d-flex flex-column pb-3">
+  <!-- <div class="d-flex flex-column pb-3">
     <div class="d-flex flex-row align-items-center">
       <div class="fw-bold" style="font-size: 14px">請勾選需判斷的物件</div>
       <ErrorMessage name="remnantsCheckbox">
@@ -133,29 +133,5 @@ export default {
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="p-3 rounded-1 bg-alert-before">
-    <span class="position-relative">
-      即時通報內容為「<b>攝影機名稱</b>偵測到閒置超過N分鐘的物件名稱，請留意！」
-    </span>
-  </div>
+  </div> -->
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/all.scss";
-.bg-alert-before {
-  position: relative;
-  overflow: hidden;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: $alert;
-    opacity: 0.3;
-  }
-}
-</style>

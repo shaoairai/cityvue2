@@ -2,9 +2,9 @@
 export default {
   data() {
     return {
-      iframeUrl:
-        document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
-        "events",
+      // iframeUrl:
+      //   document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
+      //   "events",
     };
   },
 };
@@ -12,11 +12,11 @@ export default {
 
 <template>
   <div>
-    <iframe
+    <!-- <iframe
       :src="iframeUrl"
       frameborder="0"
       class="w-100"
       style="height: calc(100vh - 128px)"
-    ></iframe>
+    ></iframe> -->
   </div>
 </template>
