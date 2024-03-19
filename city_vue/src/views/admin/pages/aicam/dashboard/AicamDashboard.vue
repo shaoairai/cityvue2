@@ -270,8 +270,6 @@ export default {
                 )
               ) {
                 item.status = "無異常";
-                // 警示音效
-                vm.audioPlay("false");
               }
             });
           }
@@ -415,14 +413,14 @@ export default {
     statusToNormal() {
       const vm = this;
       vm.audioPlay("false");
-      vm.getRoadList.forEach((item) => {
-        if (
-          item.id ===
-          Number(document.querySelector("#DEMOID").getAttribute("data-url"))
-        ) {
-          item.status = "無異常";
-        }
-      });
+      // vm.getRoadList.forEach((item) => {
+      //   if (
+      //     item.id ===
+      //     Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+      //   ) {
+      //     item.status = "無異常";
+      //   }
+      // });
 
       vm.roadList.forEach((item) => {
         if (
@@ -434,7 +432,7 @@ export default {
       });
 
       // 要切換才能更新狀態
-      vm.switchActiveCam(vm.switchRoadId);
+      // vm.switchActiveCam(vm.switchRoadId);
     },
     // 音效
     initAudio() {
