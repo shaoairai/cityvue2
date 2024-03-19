@@ -68,50 +68,32 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex flex-column pb-3">
-    <div class="d-flex flex-row align-items-center">
-      <div class="fw-bold" style="font-size: 14px">請勾選需判斷的物件</div>
-      <ErrorMessage name="ConstructionCheckbox">
-        <div class="text-danger ps-2">請至少勾選一項</div>
-      </ErrorMessage>
-    </div>
+  <div class="d-flex flex-row flex-wrap align-items-center pb-3">
+    <div>AI偵測到火焰煙霧超過辨識區域達</div>
 
-    <div class="d-flex mt-2">
-      <div class="me-3">
-        <input
-          type="checkbox"
-          id="constructionAll"
-          class="form-check-input me-1"
-          v-model="allCheckboxChecked"
-          @change="toggleAllCheckboxes"
-        />
-        <label for="constructionAll">全部</label>
-      </div>
+    <VField
+      type="number"
+      name="remnantsNumber"
+      class="form-control mx-1"
+      style="width: 160px"
+      rules="required"
+      placeholder="請輸入數字"
+      v-model="remnantsNumber"
+    />
+    <div class="pe-1">% 以上，且持續超過</div>
+    <VField
+      type="number"
+      name="remnantsNumber"
+      class="form-control mx-1"
+      style="width: 160px"
+      rules="required"
+      placeholder="請輸入數字"
+      v-model="remnantsNumber"
+    />秒鐘，即發出通報。
 
-      <div
-        v-for="(checkbox, index) in ConstructionCheckbox"
-        :key="index"
-        class="me-3"
-      >
-        <div>
-          <input
-            type="checkbox"
-            :id="checkbox.id"
-            class="form-check-input me-1"
-            name="ConstructionCheckbox"
-            v-model="checkbox.checked"
-            @change="updateChecked(checkbox)"
-          />
-          <label :for="checkbox.id">{{ checkbox.label }}</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="p-3 rounded-1 bg-alert-before">
-    <span class="position-relative">
-      即時通報內容為「<b>攝影機名稱</b>偵測到判斷物件異常狀態，請留意！」
-    </span>
+    <ErrorMessage name="remnantsNumber">
+      <div class="text-danger ps-2">必填</div>
+    </ErrorMessage>
   </div>
 </template>
 

@@ -69,34 +69,28 @@ export default {
 <template>
   <div>
     <div>
-      <table class="w-100 mt-4">
+      <table class="w-100">
         <thead>
           <tr class="fw-bold">
             <td>通報時間</td>
             <td>通報類型</td>
-            <td>通報內容</td>
-            <td>接收通報人員</td>
             <td>影像來源</td>
-            <td>IP位址</td>
+            <td>接收通報人員</td>
+            <td>影像回放</td>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, i) in paginatedItems" :key="i">
             <td>{{ item.alert_time }}</td>
             <td>{{ item.type }}</td>
-            <td>
-              <i
-                class="icon-message-square text-primary fs-2"
-                :ref="'tooltips_' + i"
-                data-bs-toggle="tooltip"
-                data-bs-placement="right"
-                data-bs-custom-class="custom-tooltip"
-                :data-bs-title="item.text"
-              ></i>
-            </td>
-            <td>{{ item.person }}</td>
             <td>{{ item.camera_name }}</td>
-            <td>{{ item.IP }}</td>
+            <td>{{ item.person }}</td>
+            <td>
+              <i class="icon-video-square fs-3 cursor-pointer">
+                <i class="path1"></i>
+                <i class="path2"></i>
+              </i>
+            </td>
           </tr>
         </tbody>
       </table>

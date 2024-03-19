@@ -511,14 +511,13 @@ export default {
             :class="
               camPlan == '火焰煙霧'
                 ? 'icon-identification1-check'
-                : 'icon-identification1'
+                : 'icon-identification1-deauflt'
             "
             style="font-size: 148px"
           >
             <i class="path1"></i>
             <i class="path2"></i>
             <i class="path3"></i>
-            <i class="path4"></i>
           </i>
         </label>
 
@@ -537,14 +536,13 @@ export default {
             :class="
               camPlan == '淹水偵測'
                 ? 'icon-identification2-check'
-                : 'icon-identification2'
+                : 'icon-identification2-deauflt'
             "
             style="font-size: 148px"
           >
             <i class="path1"></i>
             <i class="path2"></i>
             <i class="path3"></i>
-            <i class="path4"></i>
           </i>
         </label>
 
@@ -563,14 +561,13 @@ export default {
             :class="
               camPlan == '民眾路倒'
                 ? 'icon-identification3-check'
-                : 'icon-identification3'
+                : 'icon-identification3-deauflt'
             "
             style="font-size: 148px"
           >
             <i class="path1"></i>
             <i class="path2"></i>
             <i class="path3"></i>
-            <i class="path4"></i>
           </i>
         </label>
 
