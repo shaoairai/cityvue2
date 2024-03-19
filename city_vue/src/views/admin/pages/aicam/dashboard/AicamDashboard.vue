@@ -62,7 +62,56 @@ export default {
         },
       ],
       // 深層拷貝後真正使用的資料，加上是否active
-      roadList: [],
+      roadList: [
+        {
+          id: 1,
+          cameraName: "矽銀工業區",
+          status: "火焰煙霧",
+          rtsp: video1,
+          isClick: false,
+        },
+        {
+          id: 2,
+          cameraName: "博邦科學基地",
+          status: "無異常",
+          rtsp: video2,
+          isClick: false,
+        },
+        {
+          id: 3,
+          cameraName: "尼山森林區",
+          status: "無異常",
+          rtsp: video3,
+          isClick: false,
+        },
+        {
+          id: 4,
+          cameraName: "中山交叉路口",
+          status: "無異常",
+          rtsp: video4,
+          isClick: false,
+        },
+        {
+          id: 5,
+          cameraName: "力坑快速道路",
+          status: "無異常",
+          rtsp: video5,
+          isClick: false,
+        },
+        {
+          id: Number(
+            document.querySelector("#DEMOID").getAttribute("data-url")
+          ),
+          cameraName: "智慧城市展",
+          status: "無異常",
+          rtsp:
+            document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
+            `api/camera${Number(
+              document.querySelector("#DEMOID").getAttribute("data-url")
+            )}?fps=30&h=1080&bbox=1`,
+          isClick: false,
+        },
+      ],
       // 篩選項目
       filterProject: "all",
       // 篩選後
@@ -88,6 +137,9 @@ export default {
       // 是否正在播放音效
       isPlaying: false,
 
+      // 是否警報
+      alerting: false,
+
       video1: video1,
       video2: video2,
       video3: video3,
@@ -111,7 +163,7 @@ export default {
     async getRoadData() {
       // console.log("getRoadData重取資料");
       const vm = this;
-      vm.roadList = JSON.parse(JSON.stringify(vm.getRoadList));
+      // vm.roadList = JSON.parse(JSON.stringify(vm.getRoadList));
 
       // 合併目前點擊的項目
       vm.combine();
@@ -187,6 +239,7 @@ export default {
       await axios(config)
         .then((res) => {
           console.log(`./frigateevents`);
+          console.log(res);
           console.log(res.data);
 
           // 取得各鏡頭Events
@@ -197,9 +250,33 @@ export default {
           // vm.frigateEachEvents(res);
 
           if (res.data.length != 0) {
-            vm.eventsTmpFirstTmp = res.data.length;
+            vm.alerting = true;
+
+            vm.roadList.forEach((item) => {
+              if (
+                item.id ===
+                Number(
+                  document.querySelector("#DEMOID").getAttribute("data-url")
+                )
+              ) {
+                item.status = "火焰煙霧";
+              }
+            });
+
+            console.log("vm.roadList.forEach完成");
+          } else {
+            vm.roadList.forEach((item) => {
+              if (
+                item.id ===
+                Number(
+                  document.querySelector("#DEMOID").getAttribute("data-url")
+                )
+              ) {
+                item.status = "無異常";
+              }
+            });
           }
-          vm.compareData();
+          // vm.compareData();
         })
         .catch((err) => {
           console.log(err.response);
@@ -246,16 +323,16 @@ export default {
       // if (vm.eventsTmpFirstTmp.tmptime !== vm.eventsTmpFirstNew.tmptime) {
       if (vm.eventsTmpFirstTmp.length != 0) {
         console.warn("火警");
-        vm.getRoadList.forEach((item) => {
-          if (
-            item.id ===
-            Number(document.querySelector("#DEMOID").getAttribute("data-url"))
-          ) {
-            item.status = "火焰煙霧";
-          }
-        });
+        // vm.getRoadList.forEach((item) => {
+        //   if (
+        //     item.id ===
+        //     Number(document.querySelector("#DEMOID").getAttribute("data-url"))
+        //   ) {
+        //     item.status = "火焰煙霧";
+        //   }
+        // });
 
-        console.log("vm.getRoadList.forEach完成");
+        // console.log("vm.getRoadList.forEach完成");
 
         vm.roadList.forEach((item) => {
           if (
