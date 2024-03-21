@@ -56,19 +56,14 @@ export default {
         <select
           v-model="selectedOption"
           @change="handleChange"
-          style="
-            border: unset;
-            background-color: unset;
-            color: white;
-            margin-left: 12px;
-          "
+          class="systemSelected"
         >
           <option value="aicam" style="color: #222222">
             AI 監視器影像辨識系統
           </option>
-          <!-- <option value="radio" style="color: #222222">
+          <option value="radio" style="color: #222222">
             任務無線電辨識系統
-          </option> -->
+          </option>
         </select>
       </div>
       <div class="d-flex flex-row flex-nowrap align-items-center">
@@ -83,7 +78,7 @@ export default {
   <RouterView></RouterView>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .whiteLine::after {
   content: "";
   position: absolute;
@@ -92,5 +87,15 @@ export default {
   width: 2px;
   height: 50%;
   background: white;
+}
+
+.systemSelected {
+  border: unset;
+  background-color: unset;
+  color: white;
+  margin-left: 12px;
+  &:focus-visible {
+    outline: unset;
+  }
 }
 </style>

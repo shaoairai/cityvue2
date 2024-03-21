@@ -1,27 +1,3 @@
-<!-- <script>
-export default {
-  data() {
-    return {
-      iframeUrl:
-        document.querySelector("#FRIGATEIPWEB").getAttribute("data-url") +
-        "events",
-    };
-  },
-};
-</script>
-
-<template>
-  <div>
-    <iframe
-      :src="iframeUrl"
-      frameborder="0"
-      class="w-100"
-      style="height: calc(100vh - 128px)"
-    ></iframe>
-  </div>
-</template> -->
-
-<!-- 通報紀錄頁 -->
 <script>
 import { verifyToken } from "@/utils/verify";
 import NotifyPagination from "@/components/pagination/NotifyPagination.vue";
@@ -67,6 +43,9 @@ export default {
 
       // filter 資料
       notifyDataFilter: [],
+
+      // 救災 / 救護頻道 disaster / rescue
+      channel: "disaster",
     };
   },
   methods: {
@@ -116,7 +95,7 @@ export default {
         // 深層拷貝
         vm.notifyDataFilter = JSON.parse(JSON.stringify(this.notifyDataMerged));
         vm.notifyDataFilter = vm.notifyDataMerged.filter((item) =>
-          vm.isDateInRange(item.alert_time, item.type)
+          vm.isDateInRange(item.alert_time, item.text)
         );
 
         // 重讀 tooltips
@@ -157,6 +136,7 @@ export default {
         (this.insertType === undefined ||
           this.insertType === "" ||
           type === this.insertType)
+        // 依文字篩選
       );
     },
 
@@ -215,21 +195,59 @@ export default {
     <!-- <h4 class="fw-bold">通報紀錄</h4> -->
     <!-- 篩選 -->
     <div class="d-flex align-items-end mx-4 mt-3">
+      <!-- 救災 救護 -->
+      <div
+        class="rounded-3 me-3"
+        style="
+          display: inline-block;
+          background: linear-gradient(
+            to bottom,
+            #555555,
+            #333333,
+            #333333,
+            #555555
+          );
+        "
+      >
+        <button
+          type="button"
+          class="btn text-white rounded-3 fw-bold px-3"
+          @click="channel = 'disaster'"
+          :style="{
+            background:
+              channel === 'disaster'
+                ? 'linear-gradient(350deg, #3e9d41, #6eb953 33%, #29852c)'
+                : '',
+          }"
+        >
+          救災
+        </button>
+        <button
+          type="button"
+          class="btn text-white rounded-3 fw-bold px-3"
+          @click="channel = 'rescue'"
+          :style="{
+            background:
+              channel === 'rescue'
+                ? 'linear-gradient(350deg, #3e9d41, #6eb953 33%, #29852c)'
+                : '',
+          }"
+        >
+          救護
+        </button>
+      </div>
+
       <div class="me-2" style="width: 220px">
         <div>通報類型</div>
         <div>
-          <select name="" id="" class="form-select" v-model="insertType">
-            <option value="" selected>請選擇</option>
-            <option value="火焰煙霧">火焰煙霧</option>
-            <option value="淹水偵測">淹水偵測</option>
-            <option value="民眾路倒">民眾路倒</option>
-          </select>
+          <input type="text" v-model="insertType" />
         </div>
       </div>
 
       <div class="me-2" style="width: 220px">
         <div>開始日期/時間</div>
         <div>
+          <!--  @update:model-value="startDateInput()" -->
           <input
             type="datetime-local"
             class="form-control"
@@ -242,6 +260,7 @@ export default {
 
       <div class="me-2" style="width: 220px">
         <div>結束日期/時間</div>
+        <!-- @update:model-value="endDateInput()" -->
         <div>
           <input
             type="datetime-local"

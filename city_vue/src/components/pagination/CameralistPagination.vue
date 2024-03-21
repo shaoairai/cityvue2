@@ -170,12 +170,17 @@ export default {
                   </i>
                 </RouterLink>
 
-                <i
-                  class="icon-area-square fs-3 text-primary cursor-pointer me-1"
+                <RouterLink
+                  :to="`frigatearea?id=${item.id}`"
+                  style="text-decoration: none"
                 >
-                  <i class="path1"></i>
-                  <i class="path2"></i>
-                </i>
+                  <i
+                    class="icon-area-square fs-3 text-primary cursor-pointer me-1"
+                  >
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                  </i>
+                </RouterLink>
 
                 <i
                   class="icon-video-square fs-3 text-primary cursor-pointer me-1"

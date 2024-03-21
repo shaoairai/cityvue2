@@ -9,10 +9,6 @@ import router from "./router";
 // 載入 bs
 import "./assets/all.scss";
 
-// datepicker
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-
 // VeeValidate import
 import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate";
 import * as AllRules from "@vee-validate/rules";
@@ -42,9 +38,6 @@ configure({
 setLocale("zh_TW");
 
 app.mount("#app");
-
-// datepicker
-app.component("VueDatePicker", VueDatePicker);
 
 // bs modal
 import "bootstrap/dist/js/bootstrap.js";

@@ -1,6 +1,4 @@
 <script>
-import { Tooltip } from "bootstrap/dist/js/bootstrap.bundle.min.js";
-
 export default {
   props: ["notifyDataMerged", "notifyDataFilter"],
   data() {
@@ -42,26 +40,7 @@ export default {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
       }
-      // 重讀 Tooltips
-      this.initTooltips();
     },
-    initTooltips() {
-      // 重讀時，需要有 $nextTick 確保 DOM 完成
-      this.$nextTick(() => {
-        this.paginatedItems.forEach((item, i) => {
-          const button = this.$refs["tooltips_" + i][0];
-          new Tooltip(button, {
-            title: item.text,
-          });
-        });
-      });
-    },
-  },
-  mounted() {
-    // 初始化所有按钮的 Tooltip
-    this.$nextTick(() => {
-      this.initTooltips();
-    });
   },
 };
 </script>

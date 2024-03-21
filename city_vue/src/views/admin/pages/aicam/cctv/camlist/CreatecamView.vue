@@ -2,7 +2,6 @@
 <script>
 import Step1View from "./createcam_el/Step1View.vue";
 import Step2View from "./createcam_el/Step2View.vue";
-import Step3View from "./createcam_el/Step3View.vue";
 
 export default {
   data() {
@@ -21,14 +20,10 @@ export default {
   components: {
     Step1View,
     Step2View,
-    Step3View,
   },
   methods: {
     stepAdd(param) {
       this.step = param;
-      if (Number(param) === 3) {
-        this.$refs.refStep3View.loadingRstpInterval();
-      }
     },
     step1DataTmpSave(data) {
       this.step1DataTmp = data;
@@ -90,12 +85,6 @@ export default {
         @setTmp="setTmp"
         v-show="step === 2"
       ></Step2View>
-      <Step3View
-        ref="refStep3View"
-        :stepAdd="stepAdd"
-        :camId="camId"
-        v-show="step === 3"
-      ></Step3View>
     </div>
   </div>
 </template>

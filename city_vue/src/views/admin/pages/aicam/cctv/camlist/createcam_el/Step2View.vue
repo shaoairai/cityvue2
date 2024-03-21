@@ -312,20 +312,25 @@ export default {
             await vm.remnantsAjax();
           }
 
-          // 送資料到 Frigate
-          let settingFrigateBool = await vm.setFrigateConf();
+          // 還原按鈕
+          vm.nextBool = true;
+          vm.$router.push("setting");
 
-          if (settingFrigateBool) {
-            vm.reinsert = false;
+          // 以下改以後端傳送
+          // // 送資料到 Frigate
+          // let settingFrigateBool = await vm.setFrigateConf();
 
-            // 還原按鈕
-            vm.nextBool = true;
-            // 下一步驟
-            vm.stepAdd(3);
-          } else if (!vm.paramValue) {
-            // Frigate 打 API 失敗，因為已新增至資料表，下次直接走修改流程
-            vm.reinsert = true;
-          }
+          // if (settingFrigateBool) {
+          //   vm.reinsert = false;
+
+          //   // 還原按鈕
+          //   vm.nextBool = true;
+          //   // 下一步驟
+          //   vm.stepAdd(3);
+          // } else if (!vm.paramValue) {
+          //   // Frigate 打 API 失敗，因為已新增至資料表，下次直接走修改流程
+          //   vm.reinsert = true;
+          // }
         } else {
           alert("攝影機名稱不可重複！");
           // 還原按鈕

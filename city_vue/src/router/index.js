@@ -9,6 +9,10 @@ import AicamCctv from "../views/admin/pages/aicam/cctv/AicamCctv.vue";
 import AicamNotify from "../views/admin/pages/aicam/notify/NotifyView.vue";
 import CamList from "../views/admin/pages/aicam/cctv/camlist/CamList.vue";
 import CreatecamView from "../views/admin/pages/aicam/cctv/camlist/CreatecamView.vue";
+import RadioDashboard from "../views/admin/pages/radio/dashboard/RadioDashboard.vue";
+import RadioReport from "../views/admin/pages/radio/report/RadioReport.vue";
+import RadioFocus from "../views/admin/pages/radio/focus/RadioFocus.vue";
+import FrigateareaView from "../views/admin/pages/aicam/cctv/camlist/FrigateArea.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -61,26 +65,13 @@ const router = createRouter({
                   name: "create",
                   component: CreatecamView,
                 },
+                {
+                  path: "frigatearea",
+                  name: "frigatearea",
+                  component: FrigateareaView,
+                },
               ],
             },
-            // {
-            //   path: "camera",
-            //   name: "camera",
-            //   component: CamlistView,
-            //   redirect: "/admin/camera/setting",
-            //   children: [
-            //     {
-            //       path: "setting",
-            //       name: "setting",
-            //       component: CamList,
-            //     },
-            //     {
-            //       path: "create",
-            //       name: "create",
-            //       component: CreatecamView,
-            //     },
-            //   ],
-            // },
             {
               path: "notify",
               name: "aicamNotify",
@@ -92,6 +83,24 @@ const router = createRouter({
           path: "radio",
           name: "radio",
           component: RadioView,
+          redirect: "/admin/radio/dashboard",
+          children: [
+            {
+              path: "dashboard",
+              name: "radioDashboard",
+              component: RadioDashboard,
+            },
+            {
+              path: "report",
+              name: "radioReport",
+              component: RadioReport,
+            },
+            {
+              path: "focus",
+              name: "focus",
+              component: RadioFocus,
+            },
+          ],
         },
       ],
     },
