@@ -26,3 +26,16 @@ i > i[class^="path"] {
 .border-bottom {
   border-bottom: 1px solid $gray-500 !important;
 }
+
+// 關鍵字
+.highlight {
+  font-weight: 600;
+  color: $success;
+  background: $gray-200;
+}
+
+.highlight-current {
+  font-weight: 600;
+  color: $success !important;
+  background: $warning !important;
+}

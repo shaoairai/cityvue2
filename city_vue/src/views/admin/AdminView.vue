@@ -37,6 +37,16 @@ export default {
       }
     },
   },
+  mounted() {
+    const vm = this;
+    // 網址路徑
+    const fullPath = vm.$route.fullPath;
+    // 拆解
+    const pathSegments = fullPath.split("/");
+    // 獲取第二個路由；pathSegments範例：['', 'admin', 'aicam', 'dashboard']
+    vm.selectedOption = pathSegments[2];
+    vm.handleChange();
+  },
 };
 </script>
 

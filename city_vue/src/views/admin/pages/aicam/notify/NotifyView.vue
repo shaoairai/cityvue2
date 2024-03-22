@@ -131,22 +131,32 @@ export default {
       const areaDate = new Date(this.startDate);
       areaDate.setHours(areaDate.getHours() + 8);
 
-      const startDateFormatted = areaDate
-        .toISOString()
-        .slice(0, 16)
-        .replace("T", " ");
-      this.startDateFormatted = startDateFormatted;
+      try {
+        const startDateFormatted = areaDate
+          .toISOString()
+          .slice(0, 16)
+          .replace("T", " ");
+        this.startDateFormatted = startDateFormatted;
+      } catch {
+        // 清空
+        this.startDateFormatted = "";
+      }
     },
     endDateInput() {
       // 時區關係，要加8
       const areaDate = new Date(this.endDate);
       areaDate.setHours(areaDate.getHours() + 8);
 
-      const endDateFormatted = areaDate
-        .toISOString()
-        .slice(0, 16)
-        .replace("T", " ");
-      this.endDateFormatted = endDateFormatted;
+      try {
+        const endDateFormatted = areaDate
+          .toISOString()
+          .slice(0, 16)
+          .replace("T", " ");
+        this.endDateFormatted = endDateFormatted;
+      } catch {
+        // 清空
+        this.endDateFormatted = "";
+      }
     },
 
     // 判斷日期是否在這之間、篩選通報類型
