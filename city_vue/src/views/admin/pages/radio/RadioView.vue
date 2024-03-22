@@ -19,7 +19,13 @@ export default {
     const pathSegments = fullPath.split("/");
     // 獲取第二個路由；pathSegments範例：['', 'admin', 'radio', 'dashboard']
     vm.navActive = pathSegments[3];
-    console.log(vm.navActive);
+
+    // 重整若在別頁，前往該頁面
+    vm.$nextTick(() => {
+      if (vm.navActive != "dashboard") {
+        vm.$router.push("/admin/radio/" + vm.navActive);
+      }
+    });
   },
 };
 </script>

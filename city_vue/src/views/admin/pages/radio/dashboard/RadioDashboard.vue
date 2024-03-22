@@ -138,12 +138,9 @@ export default {
   },
   watch: {
     // 監聽確定表格渲染完成，才能初始化捲動的關鍵字函式
-    radioDataFilter(newData, oldData) {
+    radioDataFilter() {
       const vm = this;
       vm.$nextTick(() => {
-        console.log("表格已經渲染完成且數據已經發生變化");
-        console.log(newData);
-        console.log(oldData);
         // 初始化
         vm.initScrollKeyword();
       });
@@ -298,7 +295,6 @@ export default {
       const vm = this;
       const table = this.$refs.table;
       const highlighted = table.querySelectorAll("span.highlight");
-      console.log(highlighted);
       if (highlighted.length) {
         vm.matchesCount = highlighted.length;
         vm.currentMatch = vm.matchesCount;
@@ -317,7 +313,6 @@ export default {
       const vm = this;
       const table = this.$refs.table;
       const highlighted = table.querySelectorAll("span.highlight");
-      console.log(highlighted);
       if (highlighted.length) {
         // 移除原本當前關鍵字的樣式
         const oldTargetElement = highlighted[vm.currentMatch - 1];

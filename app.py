@@ -131,6 +131,25 @@ def aicamReport():
     iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#theme=night&bordered=true&titled=true"
     return iframeUrl
 
+@app.route("/radioReport")
+def radioReport():
+    # METABASE_SITE_URL = METABASE # "https://saas_metabase.intemotech.com"
+
+    METABASE_SITE_URL = METABASEWEB
+    METABASE_SECRET_KEY = "c6020f2bcef7b9aae1709db5bdd8092f0829dbe766fb471a5b0d015d224cad16"
+
+    payload = {
+    "resource": {"dashboard": 100},
+    "params": {
+        
+    },
+    "exp": round(time.time()) + (60 * 10) # 10 minute expiration
+    }
+    token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm="HS256")
+
+    iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#theme=night&bordered=true&titled=true"
+    return iframeUrl
+
 # object_mapping = {
 #     "手機": "cell phone",
 #     "小型手冊": "book",
