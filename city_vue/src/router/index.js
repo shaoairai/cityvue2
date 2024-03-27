@@ -13,6 +13,7 @@ import RadioDashboard from "../views/admin/pages/radio/dashboard/RadioDashboard.
 import RadioReport from "../views/admin/pages/radio/report/RadioReport.vue";
 import RadioFocus from "../views/admin/pages/radio/focus/RadioFocus.vue";
 import FrigateareaView from "../views/admin/pages/aicam/cctv/camlist/FrigateArea.vue";
+import AccountView from "../views/admin/pages/accountview/AccountView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,7 @@ const router = createRouter({
       name: "login",
       component: LoginView,
     },
+
     {
       path: "/admin",
       name: "admin",
@@ -101,6 +103,11 @@ const router = createRouter({
               component: RadioFocus,
             },
           ],
+        },
+        {
+          path: "account",
+          name: "account",
+          component: AccountView,
         },
       ],
     },
